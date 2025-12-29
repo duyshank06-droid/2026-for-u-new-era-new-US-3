@@ -2,30 +2,32 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
+  <title>Happy New Year 2026</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy New Year 2026 💖</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at top, #1a1a1a, #000000 70%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow: hidden;
-      color: #ffffff;
+      padding: 0;
+      width: 100%;
+      height: 100%;
     }
 
-    canvas#fireworks {
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1a1a1a, #000 70%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    canvas {
       position: fixed;
       inset: 0;
       z-index: 1;
@@ -35,28 +37,27 @@
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(20, 20, 20, 0.75);
-      backdrop-filter: blur(14px);
-      border-radius: 24px;
-      padding: 32px 28px;
       width: 92%;
       max-width: 420px;
+      padding: 32px 28px;
+      border-radius: 24px;
+      background: rgba(15, 15, 15, 0.75);
+      backdrop-filter: blur(14px);
       text-align: center;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-      animation: zoomIn 1.1s ease;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+      animation: fadeIn 1.2s ease;
     }
 
     h1 {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       margin-bottom: 12px;
       letter-spacing: 0.04em;
     }
 
     p {
-      font-size: 1rem;
       line-height: 1.6;
-      opacity: 0.92;
       margin-bottom: 18px;
+      opacity: 0.9;
     }
 
     img {
@@ -65,29 +66,23 @@
       object-fit: cover;
       border-radius: 16px;
       margin-bottom: 18px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     }
 
     button {
-      background: linear-gradient(135deg, #ffffff, #bbbbbb);
-      border: none;
+      background: #fff;
       color: #000;
+      border: none;
       padding: 12px 22px;
       border-radius: 999px;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      opacity: 0.85;
-    }
-
-    @keyframes zoomIn {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.85);
+        transform: scale(0.9);
       }
       to {
         opacity: 1;
@@ -95,156 +90,97 @@
       }
     }
   </style>
-
-  <!-- Audio -->
-  <audio id="bgm" loop>
-    <source src="all-the-kids-are-depressed.mp3" type="audio/mpeg">
-  </audio>
 </head>
+
 <body>
+  <canvas id="fireworks"></canvas>
 
-  <!-- Main card -->
   <div class="card">
-    <h1>🎆 Happy New Year 2026 🎆</h1>
-    <h2>Gửi người anh yêu 💖</h2>
-
-    <!-- ĐỔI love.jpg thành tên ảnh của bạn -->
-    <img id="photo" src="img1.jpg" alt="Love" />
-
-    <p>
-      Một năm mới lại đến rồi 🌸<br />
-      Cảm ơn em vì đã ở bên anh,<br />
-      mang đến cho anh thật nhiều niềm vui và yêu thương ✨
+    <h1 id="title">🎆 Chúc Mừng Năm Mới 2026</h1>
+    <p id="message">
+      Một năm mới mở ra.<br>
+      Mong là em vẫn ở đây, cùng anh.
     </p>
-
-    <button onclick="nextMessage()">💌 Nhấn từng lần để đọc lời nhắn()">💌 Lời nhắn dành cho em</button>
+    <img id="photo" src="images/1.jpg" alt="memory">
+    <button onclick="nextSlide()">Chạm nhẹ 💫</button>
   </div>
 
-  <!-- Popup -->
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <p>
-        Năm 2026 anh chỉ mong 💕<br />
-        mỗi sáng em thức dậy đều mỉm cười,<br />
-        mỗi ngày trôi qua đều thật bình yên 🌷<br /><br />
-        Mong rằng năm mới này<br />
-        và cả những năm sau nữa,<br />
-        chúng ta vẫn chọn ở bên nhau ❤️
-      </p>
-      <button class="close" onclick="closePopup()">Đóng 💖</button>
-    </div>
-  </div>
+  <audio id="bgm" loop>
+    <source src="music/all-the-kids-are-depressed.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
-  const messages = [
-    {
-      img: 'img1.jpg',
-      text: 'Năm mới đến rồi 🌸<br/>Cảm ơn em vì đã đến bên anh 💖'
-    },
-    {
-      img: 'img2.jpg',
-      text: '2026 anh mong em luôn cười thật tươi ✨<br/>Vì nụ cười của em là cả thế giới của anh'
-    },
-    {
-      img: 'img3.jpg',
-      text: 'Dù năm mới có thế nào,<br/>anh vẫn muốn nắm tay em đi tiếp ❤️'
-    },
-    {
-      img: 'img4.jpg',
-      text: 'Chúc mừng năm mới em yêu 🎆<br/>Cảm ơn em vì đã ở lại 💕'
+    const messages = [
+      {
+        text: "Giao thừa không cần ồn ào.<br>Chỉ cần có em.",
+        img: "images/1.jpg"
+      },
+      {
+        text: "Cảm ơn vì đã bước vào cuộc đời anh.",
+        img: "images/2.jpg"
+      },
+      {
+        text: "Nếu có mệt mỏi, anh vẫn ở đây.",
+        img: "images/3.jpg"
+      },
+      {
+        text: "2026 rồi,<br>mình đi tiếp cùng nhau nhé.",
+        img: "images/4.jpg"
+      }
+    ];
+
+    let index = 0;
+    let started = false;
+
+    function nextSlide() {
+      if (!started) {
+        document.getElementById("bgm").play();
+        started = true;
+      }
+
+      index = (index + 1) % messages.length;
+      document.getElementById("message").innerHTML = messages[index].text;
+      document.getElementById("photo").src = messages[index].img;
     }
-  ];
 
-  let index = 0;
-  const imgEl = document.getElementById('photo');
-  const textEl = document.querySelector('.card p');
-  const music = document.getElementById('bgm');
-
-  function nextMessage() {
-    if (music.paused) music.play();
-
-    index = (index + 1) % messages.length;
-    imgEl.src = messages[index].img;
-    textEl.innerHTML = messages[index].text;
-
-    imgEl.style.animation = 'none';
-    imgEl.offsetHeight;
-    imgEl.style.animation = 'pulse 3s infinite';
-  }
-
-  // floating hearts
-  setInterval(() => {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.innerText = '❤️';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-  }, 400);
-</script>
-
-  <canvas id="fireworks" style="position:fixed; inset:0; z-index:1; pointer-events:none;"></canvas>
-
-  <script>
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
+    // Fireworks
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-
-    class Firework {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 2 + 1;
-        this.alpha = 1;
-        this.color = `rgba(255,255,255,${this.alpha})`;
-        this.life = 60;
-        this.dx = (Math.random() - 0.5) * 4;
-        this.dy = (Math.random() - 0.5) * 4;
-      }
-      update() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.life--;
-        this.alpha = this.life / 60;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
-        ctx.fill();
-      }
-    }
 
     let fireworks = [];
 
     function createFirework() {
       const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height * 0.6;
-      for (let i = 0; i < 20; i++) {
-        fireworks.push(new Firework(x, y));
-      }
-    }
-
-    function animateFireworks() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      fireworks.forEach((fw, index) => {
-        fw.update();
-        fw.draw();
-        if (fw.life <= 0) fireworks.splice(index, 1);
+      const y = Math.random() * canvas.height * 0.5;
+      fireworks.push({
+        x,
+        y,
+        r: 0,
+        alpha: 1
       });
-      requestAnimationFrame(animateFireworks);
     }
 
-    setInterval(createFirework, 1200);
-    animateFireworks();
+    function drawFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((f, i) => {
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,255,255,${f.alpha})`;
+        ctx.stroke();
+        f.r += 1.5;
+        f.alpha -= 0.02;
+        if (f.alpha <= 0) fireworks.splice(i, 1);
+      });
+    }
+
+    setInterval(createFirework, 700);
+    function animate() {
+      drawFireworks();
+      requestAnimationFrame(animate);
+    }
+    animate();
   </script>
 </body>
 </html>
-
