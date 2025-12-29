@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year 2026 💖</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 25px;
+      padding: 35px 30px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      animation: zoomIn 1.2s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.6);
+    }
+
+    h2 {
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    img {
+      width: 260px;
+      border-radius: 20px;
+      margin: 15px 0;
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    p {
+      color: #fff;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #ff758c, #ff7eb3);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 18px rgba(255, 105, 180, 0.7);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 20px;
+      max-width: 350px;
+      text-align: center;
+      animation: pop 0.5s ease;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .popup-content p {
+      color: #ff5c8d;
+      font-size: 1.05rem;
+    }
+
+    .close {
+      margin-top: 15px;
+      background: #ff758c;
+    }
+  </style>
+
+  <!-- Audio -->
+  <audio id="bgm" loop>
+    <source src="all-the-kids-are-depressed.mp3" type="audio/mpeg">
+  </audio>
+</head>
+<body>
+
+  <!-- Main card -->
+  <div class="card">
+    <h1>🎆 Happy New Year 2026 🎆</h1>
+    <h2>Gửi người anh yêu 💖</h2>
+
+    <!-- ĐỔI love.jpg thành tên ảnh của bạn -->
+    <img id="photo" src="img1.jpg" alt="Love" />
+
+    <p>
+      Một năm mới lại đến rồi 🌸<br />
+      Cảm ơn em vì đã ở bên anh,<br />
+      mang đến cho anh thật nhiều niềm vui và yêu thương ✨
+    </p>
+
+    <button onclick="nextMessage()">💌 Nhấn từng lần để đọc lời nhắn()">💌 Lời nhắn dành cho em</button>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p>
+        Năm 2026 anh chỉ mong 💕<br />
+        mỗi sáng em thức dậy đều mỉm cười,<br />
+        mỗi ngày trôi qua đều thật bình yên 🌷<br /><br />
+        Mong rằng năm mới này<br />
+        và cả những năm sau nữa,<br />
+        chúng ta vẫn chọn ở bên nhau ❤️
+      </p>
+      <button class="close" onclick="closePopup()">Đóng 💖</button>
+    </div>
+  </div>
+
+  <script>
+  const messages = [
+    {
+      img: 'img1.jpg',
+      text: 'Năm mới đến rồi 🌸<br/>Cảm ơn em vì đã đến bên anh 💖'
+    },
+    {
+      img: 'img2.jpg',
+      text: '2026 anh mong em luôn cười thật tươi ✨<br/>Vì nụ cười của em là cả thế giới của anh'
+    },
+    {
+      img: 'img3.jpg',
+      text: 'Dù năm mới có thế nào,<br/>anh vẫn muốn nắm tay em đi tiếp ❤️'
+    },
+    {
+      img: 'img4.jpg',
+      text: 'Chúc mừng năm mới em yêu 🎆<br/>Cảm ơn em vì đã ở lại 💕'
+    }
+  ];
+
+  let index = 0;
+  const imgEl = document.getElementById('photo');
+  const textEl = document.querySelector('.card p');
+  const music = document.getElementById('bgm');
+
+  function nextMessage() {
+    if (music.paused) music.play();
+
+    index = (index + 1) % messages.length;
+    imgEl.src = messages[index].img;
+    textEl.innerHTML = messages[index].text;
+
+    imgEl.style.animation = 'none';
+    imgEl.offsetHeight;
+    imgEl.style.animation = 'pulse 3s infinite';
+  }
+
+  // floating hearts
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerText = '❤️';
+    heart.style.left = Math.random() * window.innerWidth + 'px';
+    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 400);
+</script>
+
+  <canvas id="fireworks"></canvas>
+
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    class Firework {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 2 + 1;
+        this.alpha = 1;
+        this.color = `rgba(255,255,255,${this.alpha})`;
+        this.life = 60;
+        this.dx = (Math.random() - 0.5) * 4;
+        this.dy = (Math.random() - 0.5) * 4;
+      }
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        this.life--;
+        this.alpha = this.life / 60;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    let fireworks = [];
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height * 0.6;
+      for (let i = 0; i < 20; i++) {
+        fireworks.push(new Firework(x, y));
+      }
+    }
+
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((fw, index) => {
+        fw.update();
+        fw.draw();
+        if (fw.life <= 0) fireworks.splice(index, 1);
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+
+    setInterval(createFirework, 1200);
+    animateFireworks();
+  </script>
+</body>
+</html>
